@@ -1,0 +1,42 @@
+const mongoose=require("mongoose")
+const restaurantschema=new mongoose.Schema(
+    {
+        name:
+        {
+            type:String,
+            required:true
+        },
+        image:
+        {
+            type:String,
+            required:true
+        },
+        category:
+        {
+            type:String,
+            required:true
+        },
+        rating:
+        {
+            type:String,
+            required:true
+        },
+        address:
+        {
+            type:String,
+            required:true
+        },
+        deliverytime:
+        {
+            type:String,
+            required:true
+        },
+        description:
+        {
+            type:String,
+            required:true
+        },
+    },{timestamps:true}
+)
+const Restaurant=mongoose.model("restaurant",restaurantschema)
+module.exports={Restaurant}
