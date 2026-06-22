@@ -19,10 +19,59 @@
           <a class="nav-link active fw-bold" aria-current="page" href="#">Track Orders</a>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <button class="btn btn-outline-dark me-3" type="submit">Login</button>
-        <button class="btn btn-outline-dark" type="submit">Signup</button>
-      </form>
+      <% if(user){ %>
+
+<div class="dropdown me-4">
+
+    <img
+        src="<%= user.profilepic %>"
+        width="45"
+        height="45"
+        class="rounded-circle dropdown-toggle"
+        data-bs-toggle="dropdown"
+        style="cursor:pointer; object-fit:cover;">
+
+    <ul class="dropdown-menu dropdown-menu-end">
+
+        <li>
+            <a
+            class="dropdown-item"
+            href="/profile">
+                My Profile
+            </a>
+        </li>
+
+        <li>
+            <a
+            class="dropdown-item text-danger"
+            href="/logout">
+                Logout
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+<% } else { %>
+
+<div class="d-flex">
+
+    <a
+    href="/login"
+    class="btn btn-outline-dark me-3">
+        Login
+    </a>
+
+    <a
+    href="/signup"
+    class="btn btn-outline-dark">
+        Signup
+    </a>
+
+</div>
+
+<% } %>
     </div>
   </div>
 </nav>
