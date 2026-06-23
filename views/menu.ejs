@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-   <%- include("partials/head") %>
+    <%- include("partials/head") %>
 </head>
 <style>
     .restaurantimage img {
@@ -14,56 +14,64 @@
         object-fit: cover;
         border-radius: 15px;
     }
-    .menu-img{
-    width:100%;
-    height:180px;
-    object-fit:cover;
-}
+
+    .menu-img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
 </style>
 
 <body>
     <%- include("partials/nav") %>
 
-    <div class="container my-4">
+        <div class="container my-4">
 
-        <h1 class="mb-3">
-            <%= restaurant.name %>
-        </h1>
+            <h1 class="mb-3">
+                <%= restaurant.name %>
+            </h1>
 
-        <div class="restaurantimage">
-            <img src="<%= restaurant.image %>" class="img-fluid w-100">
-        </div>
+            <div class="restaurantimage">
+                <img src="<%= restaurant.image %>" class="img-fluid w-100">
+            </div>
 
-        <div class="row mt-5">
+            <div class="row mt-5">
 
-            <% menus.forEach(menu=>{ %>
+                <% menus.forEach(menu=>{ %>
 
-                <div class="col-md-6">
+                    <div class="col-md-6">
 
-                    <div class="card mb-3">
+                        <div class="card mb-3">
 
-                        <div class="row g-0">
+                            <div class="row g-0">
 
-                            <div class="col-md-4">
-                                <img src="<%= menu.image %>" class="menu-img">
-                            </div>
+                                <div class="col-md-4">
+                                    <img src="<%= menu.image %>" class="menu-img">
+                                </div>
 
-                            <div class="col-md-8">
+                                <div class="col-md-8">
 
-                                <div class="card-body">
+                                    <div class="card-body">
 
-                                    <h5><%= menu.Name %></h5>
+                                        <h5>
+                                            <%= menu.Name %>
+                                        </h5>
 
-                                    <p>
-                                        <%= menu.Type %> |
-                                        <%= menu.Cheese ? "Cheese" : "No Cheese" %>
-                                    </p>
+                                        <p>
+                                            <%= menu.Type %> |
+                                                <%= menu.Cheese ? "Cheese" : "No Cheese" %>
+                                        </p>
 
-                                    <p>₹<%= menu.price %></p>
+                                        <p>₹<%= menu.price %>
+                                        </p>
 
-                                    <button class="btn btn-warning">
-                                        Add
-                                    </button>
+                                        <form method="POST" action="/cart/add/<%= menu._id %>">
+    <button class="btn btn-warning">
+        Add
+    </button>
+</form>
+
+                                    </div>
 
                                 </div>
 
@@ -73,16 +81,14 @@
 
                     </div>
 
-                </div>
+                    <% }) %>
 
-            <% }) %>
+            </div>
 
         </div>
 
-    </div>  
-
-    <%- include("partials/footer") %>
-
+        <%- include("partials/footer") %>
+            <%- include("partials/script") %>
 </body>
 
 </html>

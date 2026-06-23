@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include("partials/head") %>
+
+    <style>
+
+        .cart-img
+        {
+            width:120px;
+            height:120px;
+            object-fit:cover;
+            border-radius:15px;
+        }
+
+        .cart-card
+        {
+            border:none;
+            border-radius:15px;
+        }
+
+        .quantity-btn
+        {
+            width:35px;
+            height:35px;
+            padding:0;
+            font-weight:bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<%- include("partials/nav") %>
+
+<div class="container mt-5">
+
+    <h1 class="mb-4">
+        My Cart
+    </h1>
+
+    <% if(!cart || cart.items.length===0){ %>
+
+        <div class="text-center mt-5">
+
+            <h3>Your cart is empty 🛒</h3>
+
+        </div>
+
+    <% } else { %>
+
+        <% cart.items.forEach(item=>{ %>
+
+        <div class="card cart-card shadow-sm mb-4">
+
+            <div class="row g-0 align-items-center">
+
+                <div class="col-md-2 text-center p-3">
+
+                    <img
+                    src="<%= item.menuId.image %>"
+                    class="cart-img">
+
+                </div>
+
+                <div class="col-md-10">
+
+                    <div class="card-body">
+
+                        <h4 class="mb-1">
+
+                            <%= item.menuId.Name %>
+
+                        </h4>
+
+                        <p class="text-muted mb-1">
+
+                            <i class="bi bi-shop"></i>
+
+                            <%= item.menuId.restaurantId.name %>
+
+                        </p>
+
+                        <h5 class="text-success mb-3">
+
+                            ₹<%= item.menuId.price %>
+
+                        </h5>
+
+                        <div class="d-flex align-items-center gap-2">
+
+                            <form
+                            method="POST"
+                            action="/cart/decrease/<%= item.menuId._id %>">
+
+                                <button
+                                class="btn btn-danger quantity-btn">
+
+                                    -
+
+                                </button>
+
+                            </form>
+
+                            <span class="fw-bold fs-5">
+
+                                <%= item.quantity %>
+
+                            </span>
+
+                            <form
+                            method="POST"
+                            action="/cart/increase/<%= item.menuId._id %>">
+
+                                <button
+                                class="btn btn-success quantity-btn">
+
+                                    +
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <% }) %>
+
+    <% } %>
+    <div class="text-end mt-3">
+        <a href="/checkout" class="btn btn-primary mt-3">Proceed for Checkout</a>
+    </div>
+</div>
+
+<%- include("partials/script") %>
+
+</body>
+</html>

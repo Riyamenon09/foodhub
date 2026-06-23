@@ -13,6 +13,10 @@ const {restaurantrouter}=require("./routers/restaurant_route")
 const {authrouter}=require("./routers/auth_route")
 const {auth}=require("./middleware/auth")
 const {User}=require("./models/user")
+const {adminOnly}=require("./middleware/admin")
+const {ownerOnly}=require("./middleware/owner")
+const {cartrouter}=require("./routers/cart_route")
+const {checkoutrouter}=require("./routers/checkout")
 
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
@@ -50,18 +54,19 @@ app.use(async(req,res,next)=>
         next();
     }
 });
-app.get(
-"/profile",
-auth,
-(req,res)=>
+
+app.get("/admin",auth,adminOnly,(req,res)=>
 {
-    res.render(
-        "profile",
-        {
-            user:req.user
-        }
-    );
-});
+    res.send("Admin Welcome")
+})
+app.get("/owner",auth,ownerOnly,(req,res)=>
+{
+    res.send("Owner Welcome!")
+})
+app.get("/profile",auth,(req,res)=>
+{
+    res.render("profile",{user:req.user})
+})
 
 categoryconnect("mongodb://127.0.0.1:27017/Foodhub").then(()=>{console.log("category database connected!")}).catch((err)=>{console.log(`Error detected ${err}`)})
 
@@ -72,6 +77,8 @@ app.use("/restaurant",restaurantrouter)
 app.use("/",authrouter)
 app.set("view engine","ejs")
 app.set("views",path.resolve("./views"))
+app.use("/cart",cartrouter)
+app.use("/checkout",checkoutrouter)
 app.get("/",async(req,res)=>
 {
     const categories=await category.find({})

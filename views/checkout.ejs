@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include("partials/head") %>
+</head>
+
+<body>
+
+    <%- include("partials/nav") %>
+
+        <div class="container my-5">
+
+            <h1 class="mb-4">
+                Checkout
+            </h1>
+
+            <form method="POST" action="/checkout/placeorder">
+                <div class="row">
+
+                <!-- Left -->
+
+                <div class="col-md-7">
+
+                    <div class="card p-4 shadow-sm">
+
+                        <h3>
+                            Delivery Address
+                        </h3>
+
+                        <input type="text" class="form-control mb-3" name="fullName" placeholder="Full Name">
+
+                        <input type="text" class="form-control mb-3" name="phone" placeholder="Phone Number">
+
+                        <input type="text" class="form-control mb-3" name="houseNo" placeholder="House No">
+
+                        <input type="text" class="form-control mb-3" name="area" placeholder="Area">
+
+                        <input type="text" class="form-control mb-3" name="city" placeholder="City">
+
+                        <input type="text" class="form-control mb-3" name="pincode" placeholder="Pincode">
+
+                    </div>
+
+                    <div class="card p-4 shadow-sm mt-4">
+
+                        <h3>
+                            Payment Method
+                        </h3>
+
+                        <div class="form-check">
+
+                            <input class="form-check-input" type="radio" name="COD" checked>
+
+                            <label>
+                                Cash On Delivery
+                            </label>
+
+                        </div>
+
+                        <div class="form-check">
+
+                            <input class="form-check-input" type="radio" name="UPI">
+
+                            <label>
+                                UPI
+                            </label>
+
+                        </div>
+
+                        <div class="form-check">
+
+                            <input class="form-check-input" type="radio" name="CARD">
+
+                            <label>
+                                Credit / Debit Card
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
+                <!-- Right -->
+
+                <div class="col-md-5">
+
+                    <div class="card p-4 shadow-sm">
+
+                        <h3>
+                            Order Summary
+                        </h3>
+
+                        <% cart.items.forEach(item=>{ %>
+
+                            <div class="d-flex justify-content-between">
+
+                                <span>
+
+                                    <%= item.menuId.Name %>
+
+                                        x
+
+                                        <%= item.quantity %>
+
+                                </span>
+
+                                <span>
+
+                                    ₹<%= total %>
+
+                                </span>
+
+                            </div>
+
+                            <% }) %>
+
+                                <hr>
+
+                                <div class="d-flex justify-content-between">
+
+                                    <span>
+                                        Subtotal
+                                    </span>
+
+                                    <span>
+                                        ₹<%= total %>
+                                    </span>
+
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+
+                                    <span>
+                                        Delivery
+                                    </span>
+
+                                    <span>
+                                        ₹40
+                                    </span>
+
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+
+                                    <span>
+                                        GST
+                                    </span>
+
+                                    <span>
+                                        ₹20
+                                    </span>
+
+                                </div>
+
+                                <hr>
+
+                                <div class="d-flex justify-content-between fw-bold">
+
+                                    <span>
+                                        Grand Total
+                                    </span>
+
+                                    <span>
+                                        ₹<%= total+40+20 %>
+                                    </span>
+
+                                </div>
+
+                                <button type="submit" class="btn btn-success mt-4 w-100">
+
+                                    Place Order
+
+                                </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <%- include("partials/script") %>
+
+</body>
+
+</html>

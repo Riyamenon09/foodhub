@@ -1,20 +1,31 @@
 const jwt=require("jsonwebtoken")
 function auth(req,res,next)
 {
-    const token=req.cookies.token
-    if(!token)
+    if(!req.user)
     {
-        return res.redirect("/login")
-    }
-    try{
-        const decoded=jwt.verify(token,"foodhubsecret")
-        req.user=decoded
-        next()
-    }
-    catch(err)
-    {
-        return res.redirect("/login")
+        return res.redirect("/login");
     }
 
+    next();
 }
-module.exports={auth}
+
+module.exports = {auth};
+// function auth(req,res,next)
+// {
+//     const token=req.cookies.token
+//     if(!token)
+//     {
+//         return res.redirect("/login")
+//     }
+//     try{
+//         const decoded=jwt.verify(token,process.env.JWT_SECRET)
+//         req.user=decoded
+//         next()
+//     }
+//     catch(err)
+//     {
+//         return res.redirect("/login")
+//     }
+
+// }
+// module.exports={auth}
