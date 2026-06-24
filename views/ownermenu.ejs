@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include("partials/head") %>
+</head>
+<body>
+
+<%- include("partials/nav") %>
+
+<div class="container mt-5">
+
+<h1 class="mb-4">
+    Manage Menu
+</h1>
+
+<!-- ADD MENU -->
+
+<div class="card mb-5">
+
+    <div class="card-body">
+
+        <h3>Add New Item</h3>
+
+        <form
+        method="POST"
+        action="/owner/menu/add">
+
+            <input
+            type="text"
+            name="Name"
+            placeholder="Food Name"
+            class="form-control mb-2"
+            required>
+
+            <input
+            type="text"
+            name="image"
+            placeholder="Image URL"
+            class="form-control mb-2"
+            required>
+
+            <input
+            type="number"
+            name="price"
+            placeholder="Price"
+            class="form-control mb-2"
+            required>
+
+            <input
+            type="text"
+            name="Type"
+            placeholder="Veg / Non-Veg"
+            class="form-control mb-2"
+            required>
+
+            <select
+            name="Cheese"
+            class="form-control mb-3">
+
+                <option value="true">
+                    Cheese
+                </option>
+
+                <option value="false">
+                    No Cheese
+                </option>
+
+            </select>
+
+            <button
+            class="btn btn-success">
+
+                Add Item
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- EXISTING MENU -->
+
+<% menus.forEach(menu=>{ %>
+
+<div class="card mb-4">
+
+    <div class="card-body">
+
+        <form
+        method="POST"
+        action="/owner/menu/update/<%= menu._id %>">
+
+            <input
+            type="text"
+            name="Name"
+            value="<%= menu.Name %>"
+            class="form-control mb-2">
+
+            <input
+            type="text"
+            name="image"
+            value="<%= menu.image %>"
+            class="form-control mb-2">
+
+            <input
+            type="number"
+            name="price"
+            value="<%= menu.price %>"
+            class="form-control mb-2">
+
+            <input
+            type="text"
+            name="Type"
+            value="<%= menu.Type %>"
+            class="form-control mb-2">
+
+            <select
+            name="Cheese"
+            class="form-control mb-3">
+
+                <option
+                value="true"
+                <%= menu.Cheese ? "selected" : "" %>>
+                    Cheese
+                </option>
+
+                <option
+                value="false"
+                <%= !menu.Cheese ? "selected" : "" %>>
+                    No Cheese
+                </option>
+
+            </select>
+
+            <button
+            class="btn btn-warning">
+
+                Update
+
+            </button>
+
+        </form>
+
+        <form
+        method="POST"
+        action="/owner/menu/delete/<%= menu._id %>"
+        class="mt-2">
+
+            <button
+            class="btn btn-danger">
+
+                Delete
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<% }) %>
+
+</div>
+
+<%- include("partials/script") %>
+
+</body>
+</html>

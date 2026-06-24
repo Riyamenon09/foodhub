@@ -58,18 +58,20 @@
                                         </h5>
 
                                         <p>
-                                            <%= menu.Type %> |
-                                                <%= menu.Cheese ? "Cheese" : "No Cheese" %>
+                                            <%= menu.Type %> 
+                                                <% if(menu.Cheese) { %>
+                                                    | Cheese
+                                                    <% } %>
                                         </p>
 
                                         <p>₹<%= menu.price %>
                                         </p>
 
                                         <form method="POST" action="/cart/add/<%= menu._id %>">
-    <button class="btn btn-warning">
-        Add
-    </button>
-</form>
+                                            <button class="btn btn-warning">
+                                                Add
+                                            </button>
+                                        </form>
 
                                     </div>
 
@@ -88,7 +90,7 @@
         </div>
 
         <%- include("partials/footer") %>
-            <%- include("partials/script") %>
+        <%- include("partials/script") %>
 </body>
 
 </html>

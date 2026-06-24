@@ -53,12 +53,7 @@ const orderSchema =new mongoose.Schema(
         type:String,
 
         enum:
-        [
-            "COD",
-            "UPI",
-            "CARD"
-        ],
-
+        ["COD","UPI","CARD"],
         default:"COD"
     },
 
@@ -67,14 +62,7 @@ const orderSchema =new mongoose.Schema(
         type:String,
 
         enum:
-        [
-            "Placed",
-            "Preparing",
-            "Out For Delivery",
-            "Delivered",
-            "Cancelled"
-        ],
-
+        ["Placed","Preparing","Out For Delivery","Delivered","Cancelled"],
         default:"Placed"
     }
 
@@ -83,13 +71,5 @@ const orderSchema =new mongoose.Schema(
     timestamps:true
 });
 
-const Order =
-mongoose.model(
-    "order",
-    orderSchema
-);
-
-module.exports =
-{
-    Order
-};
+const Order =mongoose.model("order",orderSchema);
+module.exports ={Order};

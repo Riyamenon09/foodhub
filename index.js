@@ -1,28 +1,38 @@
 require("dotenv").config()
 const express=require("express")
-const cookieParser=require("cookie-parser")
-const path=require("path")
 const mongoose=require("mongoose")
+const path=require("path")
 const jwt=require("jsonwebtoken")
+const cookieParser=require("cookie-parser")
 
 const app=express()
 const port =8000
-const {category}=require("./models/category")
-const {categoryconnect}=require("./connection")
-const {restaurantrouter}=require("./routers/restaurant_route")
-const {authrouter}=require("./routers/auth_route")
-const {auth}=require("./middleware/auth")
+
+const {categoryconnect}=require("./connection") 
+categoryconnect("mongodb://127.0.0.1:27017/Foodhub").then(()=>{console.log("Database connected!")}).catch((err)=>{console.log(`Error detected ${err}`)})
+
 const {User}=require("./models/user")
+const {category}=require("./models/category")
+
+const {auth}=require("./middleware/auth")
 const {adminOnly}=require("./middleware/admin")
 const {ownerOnly}=require("./middleware/owner")
+
+const {authrouter}=require("./routers/auth_route")
+const {restaurantrouter}=require("./routers/restaurant_route")
 const {cartrouter}=require("./routers/cart_route")
 const {checkoutrouter}=require("./routers/checkout")
+const {ownerRoute}=require("./routers/owner_route")
+const {adminRouter}=require("./routers/admin_route")
 
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 app.use(cookieParser())
+app.use(express.static(path.join(__dirname,"public")));
 
-//global middleware
+app.set("view engine","ejs")
+app.set("views",path.resolve("./views"))
+
 app.use(async(req,res,next)=>
 {
     try
@@ -55,36 +65,36 @@ app.use(async(req,res,next)=>
     }
 });
 
-app.get("/admin",auth,adminOnly,(req,res)=>
+// app.get("/admin",auth,adminOnly,(req,res)=>
+// {
+//     res.send("Admin Welcome")
+// })
+// app.get("/owner",auth,ownerOnly,(req,res)=>
+// {
+//     res.send("Owner Welcome!")
+// })
+
+
+
+
+app.use("/",authrouter)
+app.use("/restaurant",restaurantrouter)
+app.use("/cart",cartrouter)
+app.use("/checkout",checkoutrouter)
+app.use("/owner",ownerRoute)
+app.use("/admin",adminRouter)
+
+app.get("/",async(req,res)=>
 {
-    res.send("Admin Welcome")
-})
-app.get("/owner",auth,ownerOnly,(req,res)=>
-{
-    res.send("Owner Welcome!")
+    const categories=await category.find({})
+    res.render("home",{categories})
 })
 app.get("/profile",auth,(req,res)=>
 {
     res.render("profile",{user:req.user})
 })
 
-categoryconnect("mongodb://127.0.0.1:27017/Foodhub").then(()=>{console.log("category database connected!")}).catch((err)=>{console.log(`Error detected ${err}`)})
 
-
-app.use(express.static(path.join(__dirname,"public")));
-
-app.use("/restaurant",restaurantrouter)
-app.use("/",authrouter)
-app.set("view engine","ejs")
-app.set("views",path.resolve("./views"))
-app.use("/cart",cartrouter)
-app.use("/checkout",checkoutrouter)
-app.get("/",async(req,res)=>
-{
-    const categories=await category.find({})
-    console.log(categories)
-    res.render("home",{categories})
-})
 app.listen(port,()=>
 {
     console.log("Server listening to port 8000")

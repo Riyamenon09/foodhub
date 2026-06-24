@@ -65,7 +65,6 @@ checkoutrouter.post("/placeorder", auth, async (req, res) =>
         paymentMethod: req.body.paymentMethod
     });
 
-    // Clear cart after order placement
     cart.items = [];
 
     await cart.save();
@@ -80,6 +79,4 @@ checkoutrouter.get("/order",auth,async (req,res)=>
     }).populate("items.menuId").sort({createdAt:-1})
     res.render("order",{order})
 })
-module.exports = {
-    checkoutrouter
-};
+module.exports = {checkoutrouter};
