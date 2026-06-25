@@ -4,14 +4,58 @@
 <head>
     <%- include("partials/head") %>
 </head>
+<style>
+    body
+{
+    background:#f8f9fa;
+}
 
+.card
+{
+    border:none;
+    border-radius:20px;
+    overflow:hidden;
+    transition:0.3s;
+}
+
+.card:hover
+{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.12);
+}
+
+.form-control
+{
+    border-radius:10px;
+    padding:12px;
+}
+
+.form-control:focus
+{
+    box-shadow:none;
+    border-color:#fc8019;
+}
+
+.summary-item
+{
+    margin-bottom:10px;
+}
+
+.place-order-btn
+{
+    border-radius:12px;
+    padding:12px;
+    font-size:18px;
+    font-weight:600;
+}
+</style>
 <body>
 
     <%- include("partials/nav") %>
 
         <div class="container my-5">
 
-            <h1 class="mb-4">
+            <h1 class="mb-1">
                 Checkout
             </h1>
 
@@ -24,33 +68,33 @@
 
                     <div class="card p-4 shadow-sm">
 
-                        <h3>
+                        <h3 class="fw-bold mb-4">
                             Delivery Address
                         </h3>
 
-                        <input type="text" class="form-control mb-3" name="fullName" placeholder="Full Name">
+                        <input type="text" class="form-control mb-3" name="fullName" placeholder="Full Name" required minlength="3">
 
-                        <input type="text" class="form-control mb-3" name="phone" placeholder="Phone Number">
+                        <input type="tel" class="form-control mb-3" name="phone" placeholder="Phone Number" required pattern="[0-9]{10}" title="Enter 10 digit phone number">
 
-                        <input type="text" class="form-control mb-3" name="houseNo" placeholder="House No">
+                       <input type="text" class="form-control mb-3" name="houseNo" placeholder="House No" required>
 
-                        <input type="text" class="form-control mb-3" name="area" placeholder="Area">
+                        <input type="text" class="form-control mb-3" name="area" placeholder="Area" required>
 
-                        <input type="text" class="form-control mb-3" name="city" placeholder="City">
+                        <input type="text" class="form-control mb-3" name="city" placeholder="City" required>
 
-                        <input type="text" class="form-control mb-3" name="pincode" placeholder="Pincode">
+                        <input type="text" class="form-control mb-3" name="pincode" placeholder="Pincode" required pattern="[0-9]{6}" title="Enter 6 digit pincode">
 
                     </div>
 
-                    <div class="card p-4 shadow-sm mt-4">
+                    <div class="card p-4 shadow-sm mt-4 mb-4">
 
-                        <h3>
+                        <h3 class="fw-bold mb-4">
                             Payment Method
                         </h3>
 
                         <div class="form-check">
 
-                            <input class="form-check-input" type="radio" name="COD" checked>
+                            <input class="form-check-input" type="radio" name="paymentMethod" value="COD" checked>
 
                             <label>
                                 Cash On Delivery
@@ -60,7 +104,7 @@
 
                         <div class="form-check">
 
-                            <input class="form-check-input" type="radio" name="UPI">
+                            <input class="form-check-input" type="radio" name="paymentMethod" value="UPI">
 
                             <label>
                                 UPI
@@ -70,7 +114,7 @@
 
                         <div class="form-check">
 
-                            <input class="form-check-input" type="radio" name="CARD">
+                            <input class="form-check-input" type="radio" name="paymentMethod" value="CARD">
 
                             <label>
                                 Credit / Debit Card
@@ -89,7 +133,7 @@
 
                     <div class="card p-4 shadow-sm">
 
-                        <h3>
+                        <h3 class="fw-bold mb-4">
                             Order Summary
                         </h3>
 
@@ -184,7 +228,28 @@
         </div>
 
         <%- include("partials/script") %>
+<script>
 
+document.querySelector("form").addEventListener("submit",function(e)
+{
+    const phone=document.querySelector("[name='phone']").value;
+    const pincode=document.querySelector("[name='pincode']").value;
+
+    if(phone.length!==10)
+    {
+        alert("Phone number must be 10 digits");
+        e.preventDefault();
+        return;
+    }
+
+    if(pincode.length!==6)
+    {
+        alert("Pincode must be 6 digits");
+        e.preventDefault();
+    }
+});
+
+</script>
 </body>
 
 </html>

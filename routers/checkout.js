@@ -79,4 +79,10 @@ checkoutrouter.get("/order",auth,async (req,res)=>
     }).populate("items.menuId").sort({createdAt:-1})
     res.render("order",{order})
 })
+
+checkoutrouter.get("/allorders",auth,async (req,res)=>
+{
+    const orders=await Order.find({userId:req.user._id}).populate("items.menuId").sort({createdAt:-1})
+    res.render("MyOrders",{orders})
+})
 module.exports = {checkoutrouter};

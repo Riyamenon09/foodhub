@@ -1,80 +1,230 @@
-<nav class="navbar navbar-expand-lg py-3">
-  <div class="container-fluid">
-    <a class="navbar-brand ms-5 fw-bold" href="#">FoodHub</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent ">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-5">
-        <li class="nav-item ">
-          <a class="nav-link active fw-bold" aria-current="page" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active fw-bold" aria-current="page" href="/restaurant">Restaurants</a>
-        </li>
-        
-        
-      </ul>
-      <% if(user){ %>
+<style>
 
-    <a
-    class="nav-link active fw-bold mx-2 fw-bold"
-    href="/cart">
-         &#x1F6D2;
-    </a>
+.desktop-menu{
+    display:none;
+}
+.nav-icons .btn{
+    padding: 6px 8px;
+    font-size: 0.9rem;
+    margin-right: 15px;
+}
 
-<div class="dropdown me-4">
-  
+@media(min-width:992px){
+    .desktop-menu{
+        display:flex !important;
+    }
+}
 
-    <img
-        src="<%= user.profilepic %>"
-        width="45"
-        height="45"
-        class="rounded-circle dropdown-toggle"
-        data-bs-toggle="dropdown"
-        style="cursor:pointer; object-fit:cover;">
+/* Mobile Bottom Navbar */
 
-    <ul class="dropdown-menu dropdown-menu-end">
+.mobile-footer{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:70px;
+    background:white;
+    box-shadow:0 -2px 10px rgba(0,0,0,.15);
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    z-index:9999;
+}
 
-        <li>
+.mobile-footer a{
+    text-decoration:none;
+    color:black;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    font-size:12px;
+    font-weight:600;
+}
+
+.mobile-footer i{
+    font-size:18px;
+    margin-bottom:4px;
+}
+
+@media(min-width:992px){
+    .mobile-footer{
+        display:none;
+    }
+}
+
+/* Navbar Icons */
+
+.nav-icons{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+/* Logo */
+
+@media(max-width:991px){
+    .navbar-brand{
+        margin-left:10px !important;
+    }
+}
+
+/* Prevent footer overlap */
+
+body{
+    padding-bottom:80px;
+}
+
+@media(min-width:992px){
+    body{
+        padding-bottom:0;
+    }
+}
+
+</style>
+
+<nav class="navbar navbar-expand-lg py-3 bg-light">
+
+    <div class="container-fluid">
+
+        <!-- Logo -->
+
+        <a class="navbar-brand ms-lg-5 fs-2 fw-bold" href="/">
+            <span style="color:orange">Food</span><span style="color:black">Hub</span>
+        </a>
+
+        <!-- Desktop Menu -->
+
+        <ul class="navbar-nav ms-4 desktop-menu">
+
+            <li class="nav-item">
+                <a class="nav-link fw-bold" href="/">
+                    Home
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fw-bold" href="/restaurant">
+                    Restaurants
+                </a>
+            </li>
+
+            <% if(user){ %>
+
+            <li class="nav-item">
+                <a class="nav-link fw-bold" href="/checkout/allorders">
+                    My Orders
+                </a>
+            </li>
+
+            <% } %>
+
+        </ul>
+
+        <!-- Right Side -->
+
+        <div class="ms-auto nav-icons">
+
+        <% if(user){ %>
+
+            <!-- Cart -->
+
             <a
-            class="dropdown-item"
-            href="/profile">
-                My Profile
-            </a>
-        </li>
+            class="nav-link fw-bold position-relative"
+            href="/cart">
 
-        <li>
+                <i class="fa-solid fa-cart-shopping fa-xl text-dark"></i>
+
+                <% if(cartcount > 0){ %>
+
+                <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+
+                    <%= cartcount %>
+
+                </span>
+
+                <% } %>
+
+            </a>
+
+            <!-- Profile -->
+
+            <div class="dropdown me-2">
+
+                <img
+                src="<%= user.profilepic %>"
+                width="38"
+                height="38"
+                class="rounded-circle dropdown-toggle"
+                data-bs-toggle="dropdown"
+                style="cursor:pointer; object-fit:cover;">
+
+                <ul class="dropdown-menu dropdown-menu-end">
+
+                    <li>
+                        <a
+                        class="dropdown-item"
+                        href="/profile">
+                            My Profile
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                        class="dropdown-item text-danger"
+                        href="/logout">
+                            Logout
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        <% } else { %>
+
             <a
-            class="dropdown-item text-danger"
-            href="/logout">
-                Logout
+            href="/login"
+            class="btn btn-outline-dark ">
+                Login
             </a>
-        </li>
 
-    </ul>
+            <a
+            href="/signup"
+            class="btn btn-dark">
+                Signup
+            </a>
 
-</div>
+        <% } %>
 
-<% } else { %>
+        </div>
 
-<div class="d-flex">
-
-    <a
-    href="/login"
-    class="btn btn-outline-dark me-3">
-        Login
-    </a>
-
-    <a
-    href="/signup"
-    class="btn btn-outline-dark">
-        Signup
-    </a>
-
-</div>
-
-<% } %>
     </div>
-  </div>
+
 </nav>
+
+<!-- Mobile Bottom Navigation -->
+
+<div class="mobile-footer d-lg-none">
+
+    <a href="/">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+    </a>
+
+    <a href="/restaurant">
+        <i class="fa-solid fa-utensils"></i>
+        <span>Restaurants</span>
+    </a>
+
+    <% if(user){ %>
+
+    <a href="/checkout/allorders">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span>Orders</span>
+    </a>
+
+    <% } %>
+
+</div>
+

@@ -8,18 +8,51 @@
     <%- include("partials/head") %>
 </head>
 <style>
+    .card
+{
+    border-radius:15px;
+    overflow:hidden;
+}
     .restaurantimage img {
-        height: 300px;
-        width: 100%;
-        object-fit: cover;
-        border-radius: 15px;
+    height: 400px;
+    width: 400px;
+    object-fit: fit;
+    border-radius: 15px;
+}
+
+@media(max-width:768px)
+{
+    .restaurantimage img
+    {
+        height:200px;
     }
+}
+
+@media(max-width:576px)
+{
+    .restaurantimage img
+    {
+        height:150px;
+    }
+}
 
     .menu-img {
-        width: 100%;
-        height: 180px;
-        object-fit: cover;
+    width:100%;
+    height:180px;
+    object-fit:cover;
+}
+
+@media(max-width:576px)
+{
+    .menu-img
+    {
+        height:180px;
     }
+}
+body
+{
+    background-color: #f8f9fa;;
+}
 </style>
 
 <body>
@@ -27,7 +60,7 @@
 
         <div class="container my-4">
 
-            <h1 class="mb-3">
+            <h1 class="mb-3 fw-bold restaurant-title">
                 <%= restaurant.name %>
             </h1>
 
@@ -39,17 +72,17 @@
 
                 <% menus.forEach(menu=>{ %>
 
-                    <div class="col-md-6">
+                    <div class="col-12 col-md-6 mb-3">
 
                         <div class="card mb-3">
 
                             <div class="row g-0">
 
-                                <div class="col-md-4">
+                                <div class="col-4 col-md-4">
                                     <img src="<%= menu.image %>" class="menu-img">
                                 </div>
 
-                                <div class="col-md-8">
+                                <div class="col-8 col-md-8">
 
                                     <div class="card-body">
 
@@ -69,7 +102,7 @@
 
                                         <form method="POST" action="/cart/add/<%= menu._id %>">
                                             <button class="btn btn-warning">
-                                                Add
+                                                Add to Cart
                                             </button>
                                         </form>
 

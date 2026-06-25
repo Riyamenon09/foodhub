@@ -1,6 +1,12 @@
 const mongoose=require("mongoose")
 const restaurantschema=new mongoose.Schema(
     {
+        ownerId:
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
+        required: true
+    },
         name:
         {
             type:String,

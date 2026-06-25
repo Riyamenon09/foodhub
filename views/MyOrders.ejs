@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include("partials/head") %>
+</head>
+<style>
+    .dishimage
+    {
+        height:100px;
+        width:100px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+</style>
+<body>
+
+<%- include("partials/nav") %>
+
+<div class="container mt-5">
+
+<h1 class="mb-4">
+My Orders
+</h1>
+
+<% if(orders.length === 0){ %>
+
+<div class="alert alert-info">
+No Orders Yet
+</div>
+
+<% } else { %>
+
+<% orders.forEach(order=>{ %>
+
+<div class="card shadow-sm mb-4">
+
+<div class="card-body">
+
+<h5>
+Order ID:
+<%= order._id %>
+</h5>
+
+<p class="text-muted">
+<%= order.createdAt.toDateString() %>
+</p>
+
+<hr>
+
+<h6>
+Items
+</h6>
+
+<% order.items.forEach(item=>{ %>
+
+<div class="d-flex justify-content-between">
+
+<span>
+
+<%= item.menuId.Name %> x <%= item.quantity %>
+
+</span>
+
+<span>
+
+₹<%= item.price * item.quantity %>
+
+</span>
+
+</div>
+<div class="d-flex justify-content-between">
+
+
+<img src="<%= item.menuId.image %>" class="dishimage">
+
+</div>
+
+<% }) %>
+
+<hr>
+
+<p>
+
+<strong>Total:</strong>
+
+₹<%= order.totalAmount %>
+
+</p>
+
+<p>
+
+<strong>Payment:</strong>
+
+<%= order.paymentMethod %>
+
+</p>
+
+<p>
+
+<strong>Status:</strong>
+
+<span class="badge bg-success">
+
+<%= order.status %>
+
+</span>
+
+</p>
+
+</div>
+
+</div>
+
+<% }) %>
+
+<% } %>
+
+</div>
+
+<%- include("partials/script") %>
+
+</body>
+</html>

@@ -7,7 +7,7 @@
 
 <body>
 
-<%- include("partials/nav") %>
+<%- include("partials/adminnav") %>
 
 <div class="container mt-5">
 
@@ -60,6 +60,12 @@
                 <form
                 method="POST"
                 action="/admin/restaurant/add">
+                   
+                    <input
+                    type="text"
+                    name="ownerId"
+                    placeholder="Owner User ID"
+                    class="form-control mb-2">
 
                     <input
                     type="text"

@@ -11,7 +11,8 @@ adminRouter.get("/",auth,adminOnly,async (req,res)=>
 adminRouter.post("/restaurant/add",auth,adminOnly,async (req,res)=>
 {
     await Restaurant.create({
-         name:req.body.name,
+        ownerId:req.body.ownerId,
+        name:req.body.name,
         image:req.body.image,
         category:req.body.category,
         rating:req.body.rating,
